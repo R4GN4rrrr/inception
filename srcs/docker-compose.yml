@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+    nginx-app:
+        container_name: nginx
+        build: 
+            context: ./requirement/NGINX/
+        # volumes:
+        #     - ./requirement/NGINX/conf/nginx.conf:/:ro
+        #     - ./requirement/NGINX/:/etc/nginx/ssl:ro
+        ports:
+            - "443:443"
+        restart: always
