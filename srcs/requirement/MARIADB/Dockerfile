@@ -1,16 +1,19 @@
+# Pull the Debian Bullseye image as the base image
 FROM debian:bullseye
 
-# Install nginx and openssl, and generate self-signed certificate
-RUN apt-get update -y && apt-get upgrade -y \
-    && apt-get install -y nginx openssl \
-    && mkdir -p /etc/nginx/ssl/ && chmod 755 /etc/nginx/ssl \
-    && openssl req -x509 -nodes -out "/etc/nginx/ssl/self.cert" -keyout "/etc/nginx/ssl/self.key" -subj "/"
+# Update package lists and install MariaDB server
+RUN apt-get update -y && apt-get install -y mariadb-server 
 
-# Copy our nginx config file to the conf.d folder inside the container
-COPY conf/nginx.conf /etc/nginx/conf.d/
 
-# Expose HTTPS port
-EXPOSE 443
+# Modify the MariaDB configuration to allow remote connections, as we will be connecting to our database from the WordPress container.
+#RUN sed -i 's/bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
 
-# Run nginx in the foreground
-CMD ["nginx", "-g", "daemon off;"]
+# Copy the shell script for creating the database
+COPY conf/database.sh /
+
+RUN chmod +x database.sh
+
+EXPOSE 3306
+
+# Set the default command to execute the shell script when the container starts
+CMD ["./database.sh"]
