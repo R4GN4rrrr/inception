@@ -7,7 +7,7 @@ RUN apt-get update -y && apt-get upgrade -y \
     && openssl req -x509 -nodes -out "/etc/nginx/ssl/self.cert" -keyout "/etc/nginx/ssl/self.key" -subj "/"
 
 # Copy our nginx config file to the conf.d folder inside the container
-COPY conf/nginx.conf /
+COPY conf/nginx.conf /etc/nginx/conf.d/
 
 # Expose HTTPS port
 EXPOSE 443
