@@ -4,10 +4,22 @@ services:
     nginx-app:
         container_name: nginx
         build: 
-            context: ./requirement/NGINX/
-        # volumes:
-        #     - ./requirement/NGINX/conf/nginx.conf:/:ro
-        #     - ./requirement/NGINX/:/etc/nginx/ssl:ro
+            context: ./requirement/nginx/
         ports:
             - "443:443"
         restart: always
+
+    mariadb-app:
+        container_name: mariadb
+        build: 
+            context: ./requirement/mariadb/
+        env_file:
+            - ./.env
+        ports:
+            - "3307:3306"
+        volumes:
+            - mariadb_data:/var/lib/mysql
+        restart: always
+
+volumes:
+    mariadb_data:
