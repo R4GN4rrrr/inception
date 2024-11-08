@@ -20,14 +20,14 @@ mv wp-cli.phar /usr/local/bin/wp
 wp core download --allow-root
 
 # Create wp-config.php from the sample file
-mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+# mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
 
 # Set database configuration in wp-config.php
-sed -i "s/database_name_here/$MYSQL_DATABASE/" wp-config.php
-sed -i "s/username_here/$MYSQL_USER/" wp-config.php
-sed -i "s/password_here/$MYSQL_PASSWORD/" wp-config.php
-sed -i "s/localhost/$MYSQL_HOST/" wp-config.php
-
+# sed -i "s/database_name_here/$MYSQL_DATABASE/" wp-config.php
+# sed -i "s/username_here/$MYSQL_USER/" wp-config.php
+# sed -i "s/password_here/$MYSQL_PASSWORD/" wp-config.php
+# sed -i "s/localhost/mariadb-app/" wp-config.php
+wp config create --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=mariadb-app --allow-root
 # Install WordPress
 wp core install --url=$DOMAIN_NAME --title=$WP_TITLE --admin_user=$WP_ADMIN_USR --admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL --skip-email --allow-root
 
@@ -35,15 +35,15 @@ wp core install --url=$DOMAIN_NAME --title=$WP_TITLE --admin_user=$WP_ADMIN_USR 
 wp user create $WP_USR $WP_EMAIL --role=author --user_pass=$WP_PWD --allow-root
 
 # Install and activate a theme
-wp theme install astra --activate --allow-root
+# wp theme install astra --activate --allow-root
 
 # Install and activate Redis cache plugin
-wp plugin install redis-cache --activate --allow-root
+# wp plugin install redis-cache --activate --allow-root
 
 # Set permissions for WordPress directories
-chmod -R 755 /var/www/html/wp-content/plugins
-chmod -R 755 /var/www/html/wp-content/themes
-chmod -R 755 /var/www/html/wp-content/uploads
+# chmod -R 755 /var/www/html/wp-content/plugins
+# chmod -R 755 /var/www/html/wp-content/themes
+# chmod -R 755 /var/www/html/wp-content/uploads
 
 # Set ownership to www-data
 chown -R www-data:www-data /var/www/html/
@@ -52,17 +52,17 @@ chown -R www-data:www-data /var/www/html/
 #Redis is an in-memory data structure store that can be used as a caching layer for WordPress to improve performance.
 #To enable Redis cache in WordPress, the WP_CACHE constant must be set to true in the wp-config.php file, and the Redis object cache plugin must be installed and activated.
 
-wp config set WP_CACHE true --raw --type=constant --allow-root
+# wp config set WP_CACHE true --raw --type=constant --allow-root
 #WP_CACHE is a WordPress constant that enables the use of a caching plugin.
 #--raw indicates that the value should be written as a raw value (not quoted).
 #--type=constant specifies that the value being set is a constant.
 #--allow-root allows the command to be run as the root user.
 
-wp config set WP_REDIS_HOST redis --allow-root
+# wp config set WP_REDIS_HOST redis --allow-root
 #WP_REDIS_HOST is a constant used by the Redis cache plugin to specify the hostname of the Redis server.
 #redis is the hostname of the Redis server, which should be accessible from the WordPress container.
 
-wp redis enable --allow-root
+# wp redis enable --allow-root
 #wp redis enable is a command provided by the Redis cache plugin to enable Redis caching.
 
 

@@ -1,7 +1,7 @@
 all: up
 
 up: 
-	@docker-compose -f ./srcs/docker-compose.yml up -d --build
+	@docker-compose -f ./srcs/docker-compose.yml up  --build
 
 down:
 	@docker-compose -f ./srcs/docker-compose.yml down
@@ -21,7 +21,8 @@ logs:
 clean: 	
 	@docker-compose -f ./srcs/docker-compose.yml down
 	@docker system prune --force
+	
 
 re: 
 	@docker-compose -f ./srcs/docker-compose.yml down
-	@docker-compose -f ./srcs/docker-compose.yml up -d --build
+	@docker-compose -f ./srcs/docker-compose.yml up  --build
