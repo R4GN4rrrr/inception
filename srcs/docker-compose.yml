@@ -12,6 +12,8 @@ services:
         networks:
             - inception
         restart: always
+        depends_on:
+            - wordpress-app
         init: true
 
     mariadb-app:
@@ -26,8 +28,8 @@ services:
             - mariadb:/var/lib/mysql
         networks:
             - inception
-        depends_on:
-            - nginx-app
+        # depends_on:
+        #     - nginx-app
         init: true
         restart: always
     
