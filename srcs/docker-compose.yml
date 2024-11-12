@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-    nginx-app:
+    nginx:
         container_name: nginx
         build: 
             context: ./requirement/nginx/
@@ -13,10 +13,10 @@ services:
             - inception
         restart: always
         depends_on:
-            - wordpress-app
+            - wordpress
         init: true
 
-    mariadb-app:
+    mariadb:
         container_name: mariadb
         build: 
             context: ./requirement/mariadb/
@@ -28,12 +28,10 @@ services:
             - mariadb:/var/lib/mysql
         networks:
             - inception
-        # depends_on:
-        #     - nginx-app
         init: true
         restart: always
     
-    wordpress-app:
+    wordpress:
         container_name: wordpress
         build: 
             context: ./requirement/wordpress/
@@ -46,7 +44,7 @@ services:
         env_file:
             - .env
         depends_on:
-            - mariadb-app
+            - mariadb
         init: true
         restart: always
 

@@ -10,7 +10,6 @@ RUN apt-get update -y && apt-get upgrade -y \
 # Copy our nginx config file to the conf.d folder inside the container
 COPY conf/nginx.conf /etc/nginx/conf.d/
 
-RUN echo "<h1>Welcome to NGinx <h1>" > /var/www/html/index.html
 # Expose HTTPS port
 EXPOSE 443
 

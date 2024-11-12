@@ -27,7 +27,7 @@ wp core download --allow-root
 # sed -i "s/username_here/$MYSQL_USER/" wp-config.php
 # sed -i "s/password_here/$MYSQL_PASSWORD/" wp-config.php
 # sed -i "s/localhost/mariadb-app/" wp-config.php
-wp config create --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=mariadb-app --allow-root
+wp config create --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=mariadb --allow-root
 # Install WordPress
 wp core install --url=$DOMAIN_NAME --title=$WP_TITLE --admin_user=$WP_ADMIN_USR --admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL --skip-email --allow-root
 
@@ -69,7 +69,7 @@ chown -R www-data:www-data /var/www/html/
 # Ensure PHP-FPM listens on port 9000
 sed -i 's/listen = \/run\/php\/php7.4-fpm.sock/listen = 9000/g' /etc/php/7.4/fpm/pool.d/www.conf
 #sed: Stream editor for filtering and transforming text.
-#-i: Option to edit the file in place. This means the changes are directly applied to the file without creating a backup.
+#-i: Option to edit the file in place. This means the changes afre directly applied to the file without creating a backup.
 #'s/listen = \/run\/php\/php7.4-fpm.sock/listen = 9000/g': The substitution command.
 #s: Stands for substitution.
 #listen = \/run\/php\/php7.4-fpm.sock: The pattern to search for. The backslashes (\) are used to escape the forward slashes (/) in the file path.
